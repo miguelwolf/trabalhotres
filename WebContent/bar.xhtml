@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+´
+<h:head></h:head>
+<h:body style="margin-left:50px">
+
+	<h2>Gráfico barra drag e drop</h2>
+	<h:form>
+	
+	<p:tabMenu activeIndex="#{param.i}">
+    <p:menuitem value="Linha" outcome="line" icon="pi pi-star">
+        <f:param name="i" value="0" />
+    </p:menuitem>
+    <p:menuitem value="Barra" outcome="bar" icon="pi pi-search">
+        <f:param name="i" value="1" />
+    </p:menuitem>
+  </p:tabMenu>
+	
+		<table class="container">
+			<tr>
+				<td><p:fieldset legend="Itens Meninas">
+						<p:dataList id="idItemListBar" value="#{barChartBean.itemsGirls}"
+							var="item" type="ordered">
+							<h:outputText id="idItem" value="#{item.label}" />
+							<p:draggable for="idItem" revert="true">
+							</p:draggable>
+						</p:dataList>
+					</p:fieldset></td>
+				<td><p:fieldset id="idFieldSelectedItemList"
+						legend="Itens selecionados">
+
+						<h2>PrimeFaces Bar Chart Example</h2>
+						<p:chart id="idSelectedItemListBar" var="selectedItem" type="bar" model="#{barChartBean.barModel}"
+							style="height:400px;width:600px" />
+
+						<p:droppable for="idFieldSelectedItemList" datasource="idItemListBar">
+							<p:ajax listener="#{barChartBean.onItemDropped}"
+								update="idItemListBar idSelectedItemListBar" />
+						</p:droppable>
+					</p:fieldset></td>
+			</tr>
+		</table>
+	</h:form>
+</h:body>
+
+</html>
